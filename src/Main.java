@@ -21,6 +21,9 @@ public class Main {
             result = game.play(kb,x,mode,slot);
             slot++;
         }
+        if (!result){
+            System.out.println("le jeu s'est terminé sans vainqueur");
+        }
 
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="7bacefef-95e7-4e47-b08a-4c3f035fad88" name="Changes" comment="">
+    <list default="true" id="7bacefef-95e7-4e47-b08a-4c3f035fad88" name="Changes" comment="update 1">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/puissance4/P4Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/puissance4/P4Game.java" afterDir="false" />
@@ -54,8 +54,20 @@
       <workItem from="1666793683667" duration="498000" />
       <workItem from="1666876818472" duration="5539000" />
       <workItem from="1666898607320" duration="12951000" />
-      <workItem from="1666942697672" duration="346000" />
+      <workItem from="1666942697672" duration="563000" />
+      <workItem from="1666947498358" duration="16683000" />
+      <workItem from="1666967289584" duration="4426000" />
+      <workItem from="1666983766260" duration="16799000" />
+      <workItem from="1667031735103" duration="685000" />
     </task>
+    <task id="LOCAL-00001" summary="update 1">
+      <created>1666943103848</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1666943103848</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -71,6 +83,10 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="update 1" />
+    <option name="LAST_COMMIT_MESSAGE" value="update 1" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

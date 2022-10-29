@@ -3,10 +3,16 @@ package puissance4;
 import java.util.Random;
 import java.util.Scanner;
 
+import static java.lang.Math.round;
+
 public class P4Game {
+    private static final String ANSI_RESE ="\u001B[0m" ;
+    private int Gi,Gj;
+    private static final String ANSI_RED_BACKGROUND = "\u001B[41m";
     private int[] colHight = new int[]{5, 5, 5, 5, 5, 5, 5};
     private int[] entrePerCol = new int[]{0, 0, 0, 0, 0, 0, 0};
     private int totalslots;
+    private int previousRand=0;
 
 
     private String[][] board = new String[6][7];
@@ -57,14 +63,15 @@ public class P4Game {
         int lim = col+3>6? 6 : col+3;
         //check for four consecutive matches
         for (int stCol = k; stCol<=col; stCol++ ){
-            int j = stCol,counter = 0;
+            int j = stCol,counth = 0;
 
-            while (this.board[i][j].equals(input) && counter<4 && j<lim){
-                counter++;
+            while (this.board[i][j].equals(input) && counth<4){
+                counth++;
+                if(counth==4){Gi=i; Gj=j;}
+                if (j+1>6){ break;}else{j++;}
 
-                j++;
             }
-            if (counter == 4){
+            if (counth == 4){
                 return true;
             }
         }
@@ -72,14 +79,14 @@ public class P4Game {
     }
     public boolean verticalWinningSlot(int col, String input){
         int i =this.colHight[col];
-        int lim = i+3>5? 5 : i+3;
-        int counter = 0;
-        while (this.board[i][col].equals(input) && counter<4){
-            counter++;
+        int countv = 0;
+        while (this.board[i][col].equals(input) && countv<4 ){
+            countv++;
+            if(countv==4){Gi=i; Gj=col;}
+            if (i>=5){break;}else {i++;}
 
-            if (i<lim)i++;
         }
-        if (counter == 4){
+        if (countv == 4){
 
             return true;
         }
@@ -88,16 +95,18 @@ public class P4Game {
     public boolean  rightDiagonalWinningSlot(int col,String input){
         if (col == 6){
             int startRowIndex =colHight[col];
-            int i = startRowIndex, j =col, counter=0;
-            while (board[i][j].equals(input) && counter<4){
-                counter++;
-                if(i<5)i++;
-                if(j>0)j--;
+            int i = startRowIndex, j =col, countDr=0;
+
+            while (board[i][j].equals(input) && countDr<4){
+                countDr++;
+                if(countDr==4){Gi=i; Gj=j;}
+                if(i==5||j==0){break;} else {i++;j--;}
+
             }
-            if (counter == 4) {
+            if (countDr == 4) {
                 return true;
             }
-        } else if (col>2 && colHight[col]<3) {
+        } else {
             int row =colHight[col];
             int colStart =col+row>6? 6 : col+row;
             int startRowIndex = row+col-6<0? 0 : row+col-6;
@@ -107,8 +116,8 @@ public class P4Game {
 
                 while (board[i][j].equals(input) && counter<4){
                     counter++;
-                    if(i<5)j++;
-                    if(j>0)j--;
+                    if(counter==4){Gi=i; Gj=j;}
+                    if(i==5||j==0){break;} else {i++;j--;}
 
                 }
                 if (counter == 4) {
@@ -125,23 +134,24 @@ public class P4Game {
             int i = startRowIndex, j =col, counter=0;
             while (board[i][j].equals(input) && counter<4){
                 counter++;
-                if(i<5)i++;
-                if(j<6)j++;
+                if(counter==4){Gi=i; Gj=j;}
+                if(i==5||j==6){break;} else {i++;j++;}
             }
             if (counter == 4) {
                 return true;
             }
-        } else if (col<4 && colHight[col]<3) {
+        } else {
             int row =colHight[col];
             int colStart =col-row<0? 0 : col-row;
-            int startRowIndex = col-row<0? (col-row)+row: 0;
+            int startRowIndex = row-col<0? 0: row-col;
+
             for (int i = startRowIndex, j = colStart; i<= row && j <=col; i++, j++){
                 int counter = 0;
 
                 while (board[i][j].equals(input) && counter<4){
                     counter++;
-                    if(i<5)i++;
-                    if(j<6)j++;
+                    if(counter==4){Gi=i; Gj=j;}
+                    if(i==5||j==6){break;} else {i++;j++;}
                 }
                 if (counter == 4) {
                     return true;
@@ -180,14 +190,83 @@ public class P4Game {
         }
         this.showBoad();
 
-        if (playerXh || playerXv || playerXDl ||playerXDR ){
-                System.out.println("playerX a gagner");
-                return true;
+        if (playerXh||playerYh ){
+            for(int i = 0 ; i<6;i++){
+                System.out.print("########################");
+                for (int j = 0 ; j<7;j++) {
+
+                        if(i==Gi && (j==Gj||j==Gj-1||j==Gj-2||j==Gj-3)){
+                            System.out.print(ANSI_RED_BACKGROUND+"|"+board[i][j]+"|"+ ANSI_RESE);
+                        }else {
+                            System.out.print("|"+board[i][j]+"|");
+                        }
+
+
+                }
+                System.out.println("#############################");
+            }
+            System.out.println("##########################################################################");
+
+            System.out.println("player "+x+" a gagner sur l'horizontal");
+            return true;
 
         }
-        else if (playerYh ||playerYv|| playerYDl ||playerYDR ){
-                System.out.println("playerY a gagner");
-                return true;
+        else if (playerXv||playerYv ){
+            for(int i = 0 ; i<6;i++){
+                System.out.print("########################");
+                for (int j = 0 ; j<7;j++) {
+
+                    if(j==Gj && (i==Gi||i==Gi-1||i==Gi-2||i==Gi-3)){
+                        System.out.print(ANSI_RED_BACKGROUND+"|"+board[i][j]+"|"+ ANSI_RESE);
+                    }else {
+                        System.out.print("|"+board[i][j]+"|");
+                    }
+
+
+                }
+                System.out.println("#############################");
+            }
+            System.out.println("##########################################################################");
+
+            System.out.println("player "+x+" a gagner sur l'vertical");
+            return true;
+        } else if (playerXDl|| playerYDl) {
+            for(int i = 0 ; i<6;i++){
+                System.out.print("########################");
+                for (int j = 0 ; j<7;j++) {
+
+                    if((i==Gi && j==Gj)||(i==Gi-1 && j==Gj-1)||(i==Gi-2 && j==Gj-2)||(i==Gi-3 && j==Gj-3) ){
+                        System.out.print(ANSI_RED_BACKGROUND+"|"+board[i][j]+"|"+ ANSI_RESE);
+                    }else {
+                        System.out.print("|"+board[i][j]+"|");
+                    }
+
+
+                }
+                System.out.println("#############################");
+            }
+            System.out.println("##########################################################################");
+
+            System.out.println("player "+x+" a gagner sur le DL");
+            return true;
+        } else if (playerXDR ||playerYDR) {
+            for(int i = 0 ; i<6;i++){
+                System.out.print("########################");
+                for (int j = 0 ; j<7;j++) {
+
+                    if((i==Gi && j==Gj)||(i==Gi-1 && j==Gj+1)||(i==Gi-2 && j==Gj+2)||(i==Gi-3 && j==Gj+3) ){
+                        System.out.print(ANSI_RED_BACKGROUND+"|"+board[i][j]+"|"+ ANSI_RESE);
+                    }else {
+                        System.out.print("|"+board[i][j]+"|");
+                    }
+
+
+                }
+                System.out.println("#############################");
+            }
+            System.out.println("##########################################################################");
+            System.out.println("player "+x+" a gagner sur le DR");
+            return true;
         }
 
 
@@ -212,11 +291,20 @@ public class P4Game {
                 }while (this.colHight[col]<0 || (col<0 || col>6));
 
             }else if (slot%2==1){
-
-                col = random.nextInt(7);
-                while (this.colHight[col]<0){
-                    col = random.nextInt(7);
+                int min =0;
+                int max=6;
+                if (slot>1){
+                    min = this.previousRand-2 < 0? 0: this.previousRand-2;
+                    max = this.previousRand+2>6 ? 6 :this.previousRand+2;
                 }
+
+
+
+                col = (int) round(random.nextDouble(max-min)+min);
+                while (this.colHight[col]<0){
+                    col = (int) round(random.nextDouble(max+1-min)+min);
+                }
+                this.previousRand=col;
             }
 
         }

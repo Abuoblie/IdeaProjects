@@ -3,6 +3,8 @@ import puissance4.P4Game;
 import java.util.*;
 
 public class Main {
+
+
     public static void main(String[] args) {
         Scanner kb = new Scanner(System.in);
         System.out.println("################### Bievenu au puissance 4 consol! #######################");
@@ -20,6 +22,9 @@ public class Main {
             String x=(slot%2 == 0)?"X":"Y";
             result = game.play(kb,x,mode,slot);
             slot++;
+        }
+        if (!result){
+            System.out.println("le jeu s'est terminé sans vainqueur");
         }
 
     }

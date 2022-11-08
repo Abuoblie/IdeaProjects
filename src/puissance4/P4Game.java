@@ -6,11 +6,13 @@ import java.util.Scanner;
 import static java.lang.Math.round;
 
 public class P4Game {
-    private static final String ANSI_RESE ="\u001B[0m" ;
+    private static final String ANSI_RESET ="\u001B[0m" ;
+    private static final String ANSI_GREEN ="\u001B[32m" ;
+    private static final String ANSI_BLUE ="\u001B[34m" ;
     private int Gi,Gj;
     private static final String ANSI_RED_BACKGROUND = "\u001B[41m";
     private int[] colHight = new int[]{5, 5, 5, 5, 5, 5, 5};
-    private int[] entrePerCol = new int[]{0, 0, 0, 0, 0, 0, 0};
+    //private int[] entrePerCol = new int[]{0, 0, 0, 0, 0, 0, 0};
     private int totalslots;
     private int previousRand=0;
 
@@ -47,8 +49,15 @@ public class P4Game {
         for(String[] line: board){
             System.out.print("########################");
             for (String cel:line) {
+                if (cel.equals("X") ){
+                    System.out.print(ANSI_BLUE+"|"+cel+"|"+ANSI_RESET);
+                } else if (cel.equals("Y")) {
+                    System.out.print(ANSI_GREEN+"|"+cel+"|"+ANSI_RESET);
+                }
+                else {
+                    System.out.print("|"+cel+"|");
+                }
 
-                System.out.print("|"+cel+"|");
             }
             System.out.println("#############################");
         }
@@ -196,7 +205,7 @@ public class P4Game {
                 for (int j = 0 ; j<7;j++) {
 
                         if(i==Gi && (j==Gj||j==Gj-1||j==Gj-2||j==Gj-3)){
-                            System.out.print(ANSI_RED_BACKGROUND+"|"+board[i][j]+"|"+ ANSI_RESE);
+                            System.out.print(ANSI_RED_BACKGROUND+"|"+board[i][j]+"|"+ ANSI_RESET);
                         }else {
                             System.out.print("|"+board[i][j]+"|");
                         }
@@ -217,7 +226,7 @@ public class P4Game {
                 for (int j = 0 ; j<7;j++) {
 
                     if(j==Gj && (i==Gi||i==Gi-1||i==Gi-2||i==Gi-3)){
-                        System.out.print(ANSI_RED_BACKGROUND+"|"+board[i][j]+"|"+ ANSI_RESE);
+                        System.out.print(ANSI_RED_BACKGROUND+"|"+board[i][j]+"|"+ ANSI_RESET);
                     }else {
                         System.out.print("|"+board[i][j]+"|");
                     }
@@ -236,7 +245,7 @@ public class P4Game {
                 for (int j = 0 ; j<7;j++) {
 
                     if((i==Gi && j==Gj)||(i==Gi-1 && j==Gj-1)||(i==Gi-2 && j==Gj-2)||(i==Gi-3 && j==Gj-3) ){
-                        System.out.print(ANSI_RED_BACKGROUND+"|"+board[i][j]+"|"+ ANSI_RESE);
+                        System.out.print(ANSI_RED_BACKGROUND+"|"+board[i][j]+"|"+ ANSI_RESET);
                     }else {
                         System.out.print("|"+board[i][j]+"|");
                     }
@@ -255,7 +264,7 @@ public class P4Game {
                 for (int j = 0 ; j<7;j++) {
 
                     if((i==Gi && j==Gj)||(i==Gi-1 && j==Gj+1)||(i==Gi-2 && j==Gj+2)||(i==Gi-3 && j==Gj+3) ){
-                        System.out.print(ANSI_RED_BACKGROUND+"|"+board[i][j]+"|"+ ANSI_RESE);
+                        System.out.print(ANSI_RED_BACKGROUND+"|"+board[i][j]+"|"+ ANSI_RESET);
                     }else {
                         System.out.print("|"+board[i][j]+"|");
                     }
@@ -271,7 +280,7 @@ public class P4Game {
 
 
         this.colHight[col]-=1;
-        this.entrePerCol[col]+=1;
+        //this.entrePerCol[col]+=1; will use it in the future
 
         return false;
     }
